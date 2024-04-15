@@ -27,30 +27,6 @@ pub fn animal_habitat(animal: &str) -> &'static str {
     habitat
 }
 
-fn gopher_lives_in_burrow() {
-    assert_eq!(animal_habitat("gopher"), "Burrow")
-}
-
-fn snake_lives_in_desert() {
-    assert_eq!(animal_habitat("snake"), "Desert")
-}
-
-fn crab_lives_on_beach() {
-    assert_eq!(animal_habitat("crab"), "Beach")
-}
-
-fn unknown_animal() {
-    assert_eq!(animal_habitat("dinosaur"), "Unknown")
-}
-
-
-fn main(){
-    gopher_lives_in_burrow();
-    snake_lives_in_desert();
-    crab_lives_on_beach();
-    unknown_animal();
-} 
-
 #[cfg(test)]
 mod tests {
     use super::*;
