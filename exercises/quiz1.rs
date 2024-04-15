@@ -19,12 +19,12 @@
 // Don't modify this function!
 
 pub fn calculate_price_of_apples(a:i32) -> i32 {
-    let num == if a > 40{
+    let num = if a > 40{
         1
     }
     else {
         2
-    }
+    };
 
     num*a
 }
