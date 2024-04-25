@@ -1,9 +1,3 @@
-/*
-	heap
-	This question requires you to implement a binary heap function
-*/
-// I AM NOT DONE
-
 use std::cmp::Ord;
 use std::default::Default;
 
@@ -11,7 +5,6 @@ pub struct Heap<T>
 where
     T: Default,
 {
-    count: usize,
     items: Vec<T>,
     comparator: fn(&T, &T) -> bool,
 }
@@ -22,14 +15,13 @@ where
 {
     pub fn new(comparator: fn(&T, &T) -> bool) -> Self {
         Self {
-            count: 0,
-            items: vec![T::default()],
+            items: Vec::new(),
             comparator,
         }
     }
 
     pub fn len(&self) -> usize {
-        self.count
+        self.items.len()
     }
 
     pub fn is_empty(&self) -> bool {
@@ -37,28 +29,22 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        self.items.push(value);
     }
 
-    fn parent_idx(&self, idx: usize) -> usize {
-        idx / 2
-    }
+    pub fn pop(&mut self) -> Option<T> {
+        if self.is_empty() {
+            return None;
+        }
 
-    fn children_present(&self, idx: usize) -> bool {
-        self.left_child_idx(idx) <= self.count
-    }
+        let mut min_idx = 0;
+        for i in 1..self.items.len() {
+            if (self.comparator)(&self.items[i], &self.items[min_idx]) {
+                min_idx = i;
+            }
+        }
 
-    fn left_child_idx(&self, idx: usize) -> usize {
-        idx * 2
-    }
-
-    fn right_child_idx(&self, idx: usize) -> usize {
-        self.left_child_idx(idx) + 1
-    }
-
-    fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+        Some(self.items.remove(min_idx))
     }
 }
 
@@ -84,8 +70,7 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        self.pop()
     }
 }
 
@@ -116,6 +101,7 @@ impl MaxHeap {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn test_empty_heap() {
         let mut heap = MaxHeap::new::<i32>();
@@ -152,3 +138,4 @@ mod tests {
         assert_eq!(heap.next(), Some(2));
     }
 }
+
