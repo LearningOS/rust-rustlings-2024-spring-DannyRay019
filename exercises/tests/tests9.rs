@@ -27,17 +27,21 @@
 //
 // You should NOT modify any existing code except for adding two lines of attributes.
 
-// I AM NOT DONE
-
 extern "Rust" {
+    #[no_mangle]
     fn my_demo_function(a: u32) -> u32;
     fn my_demo_function_alias(a: u32) -> u32;
 }
 
 mod Foo {
     // No `extern` equals `extern "Rust"`.
-    fn my_demo_function(a: u32) -> u32 {
-        a
+    #[no_mangle]
+    pub fn my_demo_function(a: u32) -> u32 {
+        a * 2
+    }
+    #[no_mangle]
+    pub fn my_demo_function_alias(a: u32) -> u32 {
+        a * 3
     }
 }
 
@@ -53,9 +57,9 @@ mod tests {
         //
         // SAFETY: We know those functions are aliases of a safe
         // Rust function.
-        unsafe {
-            my_demo_function(123);
-            my_demo_function_alias(456);
-        }
+        let result1 = unsafe { my_demo_function(123) };
+        let result2 = unsafe { my_demo_function_alias(456) };
+        assert_eq!(result1, 246);
+        assert_eq!(result2, 1368);
     }
 }
